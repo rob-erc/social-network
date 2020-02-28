@@ -166,33 +166,46 @@
             </div>
         </div>
     </div>
-        <div class="container emp-profile">
-            <form method="post" action="">
-                @csrf
-                <div class="col-md-12">
-                    <label>New Post</label><br/>
-                    <div class="form-group">
-                        <textarea class="form-control" name="post" rows="5"></textarea>
-                        <div class="col-md-2">
-                            <input type="submit" class="btn btn-primary" value="Submit" style="margin-top: 5px"/>
-                        </div>
+    <div class="container emp-profile">
+        <form method="post" action="">
+            @csrf
+            <div class="col-md-12">
+                <label>New Post</label><br/>
+                <div class="form-group">
+                    <textarea class="form-control" name="post" rows="5"></textarea>
+                    <div class="col-md-2">
+                        <input type="submit" class="btn btn-primary" value="Submit" style="margin-top: 5px"/>
                     </div>
                 </div>
+            </div>
 
-            </form>
-        </div>
+        </form>
+    </div>
 
-        <div class="container emp-profile">
-            <h5>Your Feed</h5>
-        </div>
+    <div class="container emp-profile">
+        <h5>Your Feed</h5>
+    </div>
 
-        @if($posts->count() > 0)
-            @foreach($posts as $post)
-                <div class="container emp-profile">
-                    <p>{!! $post->post_body !!}</p>
-                    <p id="post-author">Author: {{ $post->author_full_name }}</p>
-                </div>
-            @endforeach
-        @endif
+    @if($posts->count() > 0)
+        @foreach($posts as $post)
+            <div class="container emp-profile">
+                <p>{!! $post->post_body !!}</p>
+                <p id="post-author">Author: {{ $post->author_full_name }}</p>
+                <form method="post" action="{{ route('postLikePls', ['postId' => $post->id]) }}">
+                    @csrf
+
+                    @if($post->likes()->count() == 0)
+                        <button type="submit" class="btn btn-primary"><img
+                                src="https://img.icons8.com/cotton/2x/thumb-up.png" style=" height: 20px; width: auto;">
+                        </button>
+                    @else
+                        <button type="submit" class="btn btn-primary"><img
+                                src="https://img.icons8.com/cotton/2x/thumb-up.png"
+                                style=" height: 20px; width: auto;">{{ $post->likes()->count() }}</button>
+                    @endif
+                </form>
+            </div>
+        @endforeach
+    @endif
 
 @endsection

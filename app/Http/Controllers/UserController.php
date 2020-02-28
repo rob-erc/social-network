@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Friendship;
+use App\Post;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -88,8 +88,7 @@ class UserController extends Controller
         $user = User::find($userId);
         $allIDs = $user->following->pluck('id')->push($user->id);
 
-        $allPosts = DB::table('posts')
-            ->whereIn('user_id', $allIDs)
+        $allPosts = Post::whereIn('user_id', $allIDs)
             ->orderBy('created_at', 'desc')
             ->get();
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Post;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class ProfileController extends Controller
 
         $allIDs = $user->following->pluck('id')->push(Auth::id());
 
-        $allPosts = DB::table('posts')->whereIn('user_id', $allIDs)->orderBy('created_at', 'desc')->get();
+        $allPosts = Post::whereIn('user_id', $allIDs)->orderBy('created_at', 'desc')->get();
 
         return view('profile.profile')->with(['user' => $user, 'posts' => $allPosts]);
     }
