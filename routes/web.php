@@ -26,9 +26,23 @@ Route::get('/profile/edit', 'ProfileController@edit')->name('profileEdit')->midd
 
 Route::put('/profile/edit', 'ProfileController@update')->name('profileUpdate')->middleware('auth');
 
+Route::post('/profile/gallery/new', 'ProfileGalleryController@create')->name('createGallery')->middleware('auth');
+
+Route::get('/profile/galleries', 'ProfileGalleryController@index')->name('allGalleries')->middleware('auth');
+
+Route::post('/profile/gallery/{galleryId}', 'ProfileGalleryController@addPicture')->name('addPicToGallery')->middleware('auth');
+
+Route::delete('/profile/gallery/{galleryId}', 'ProfileGalleryController@deletePicture')->name('deletePicture')->middleware('auth');
+
+Route::get('/profile/gallery/{gallery}', 'ProfileGalleryController@show')->name('showGallery')->middleware('auth');
+
 Route::get('/profile/{slug}', 'ProfileController@profile')->name('profileShow')->middleware('auth');
 
 Route::post('/profile/{slug}', 'PostController@create')->name('createPost')->middleware('auth');
+
+Route::get('/user/{slug}/galleries', 'UserGalleryController@index')->name('userGalleries')->middleware('auth');
+
+Route::get('/user/{slug}/gallery/{galleryId}', 'UserGalleryController@show')->name('userGallery')->middleware('auth');
 
 Route::get('/user/{slug}', 'UserController@user')->name('userShow')->middleware('auth');
 
@@ -39,6 +53,7 @@ Route::post('/user/{userId}', 'UserController@follow')->name('userFollow')->midd
 Route::post('/user/{userId}/friend_request', 'UserController@friendRequest')->name('userFriendRequest')->middleware('auth');
 
 Route::patch('/user/{userId}/accept_friend_request', 'UserController@acceptFriendRequest')->name('userAcceptFriendRequest')->middleware('auth');
+
 
 ////////////////////////////////////
 //Route::post('/view', function () {
