@@ -36,6 +36,9 @@ Route::delete('/profile/gallery/{galleryId}', 'ProfileGalleryController@deletePi
 
 Route::get('/profile/gallery/{gallery}', 'ProfileGalleryController@show')->name('showGallery')->middleware('auth');
 
+Route::post('/post/like/{postId}', 'LikeController@likePost')->name('postLikePls')->middleware('auth');
+Route::post('/picture/like/{pictureId}', 'LikeController@likePicture')->name('likePicture')->middleware('auth');
+
 Route::get('/profile/{slug}', 'ProfileController@profile')->name('profileShow')->middleware('auth');
 
 Route::post('/profile/{slug}', 'PostController@create')->name('createPost')->middleware('auth');

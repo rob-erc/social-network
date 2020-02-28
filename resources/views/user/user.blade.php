@@ -140,6 +140,19 @@
         <div class="container emp-profile">
             <p>{!! $post->post_body !!} </p>
             <p id="post-author">Author: {{ $post->author_full_name }}</p>
+            <form method="post" action="{{ route('postLikePls', ['postId' => $post->id]) }}">
+                @csrf
+
+                @if($post->likes()->count() == 0)
+                    <button type="submit" class="btn btn-primary"><img
+                            src="https://img.icons8.com/cotton/2x/thumb-up.png" style=" height: 20px; width: auto;">
+                    </button>
+                @else
+                    <button type="submit" class="btn btn-primary"><img
+                            src="https://img.icons8.com/cotton/2x/thumb-up.png"
+                            style=" height: 20px; width: auto;">{{ $post->likes()->count() }}</button>
+                @endif
+            </form>
         </div>
     @endforeach
 

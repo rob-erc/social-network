@@ -52,15 +52,15 @@ class ProfileGalleryController extends Controller
         return back();
     }
 
-    public function deletePicture(Picture $picture)
-    {
-//        Picture::where(['id' => $pictureId])
-//            ->first()
-//            ->delete();
-        Storage::disk('public')->delete($picture->path);
-
-        $picture->delete();
-
-        return back();
-    }
+//    public function deletePicture(Picture $picture)
+//    {
+////        Picture::where(['id' => $pictureId])
+////            ->first()
+////            ->delete();
+//        Storage::disk('public')->delete($picture->path);
+//
+//        $picture->delete();
+//
+//        return back();
+//    }
 }
