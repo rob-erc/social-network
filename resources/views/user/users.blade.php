@@ -10,7 +10,7 @@
                 <p>User full name: {{ $user->name }} {{ $user->surname }}</p>
                 <div class="col-md-2">
                     <form method="GET" action="{{ route('userShow', ['slug' => $user->profileRouteSlug()]) }}">
-                        <input type="submit" class="profile-edit-btn" value="Show"/>
+                        <input type="submit" class="btn btn-primary" value="Show"/>
                     </form>
                 </div>
             </div>

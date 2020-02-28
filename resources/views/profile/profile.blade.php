@@ -46,9 +46,16 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <form method="GET" action="{{ route('profileEdit') }}">
-                    <input type="submit" class="profile-edit-btn" value="Edit Profile"/>
-                </form>
+                <div class="profile-button">
+                    <form method="GET" action="{{ route('profileEdit') }}">
+                        <input type="submit" class="btn btn-primary" value="Edit Profile"/>
+                    </form>
+                </div>
+                <div class="profile-button">
+                    <form method="GET" action="{{ route('allGalleries') }}">
+                        <input type="submit" class="btn btn-primary" value="Galleries"/>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -132,7 +139,8 @@
                                                       action="{{ route('userAcceptFriendRequest', ['userId' => $user->id]) }}">
                                                     @method('PATCH')
                                                     <button type="submit"
-                                                            class="list-group-item list-group-item-action list-group-item-success">Accept
+                                                            class="list-group-item list-group-item-action list-group-item-success">
+                                                        Accept
                                                         Request
                                                     </button>
                                                 </form>
@@ -140,7 +148,8 @@
                                                 <form method="post"
                                                       action="{{ route('userFriendRequest', ['userId' => $user->id]) }}">
                                                     <button type="submit"
-                                                            class="list-group-item list-group-item-action list-group-item-dark">Refuse
+                                                            class="list-group-item list-group-item-action list-group-item-dark">
+                                                        Refuse
                                                         Request
                                                     </button>
                                                 </form>
@@ -149,6 +158,7 @@
                                         @endforeach
                                     </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -156,32 +166,33 @@
             </div>
         </div>
     </div>
-    <div class="container emp-profile">
-        <form method="post" action="">
-            @csrf
-            <div class="col-md-12">
-                <label>New Post</label><br/>
-                <div class="form-group">
-                    <textarea class="form-control" name="post" rows="5"></textarea>
-                    <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" value="Submit" style="margin-top: 5px"/>
+        <div class="container emp-profile">
+            <form method="post" action="">
+                @csrf
+                <div class="col-md-12">
+                    <label>New Post</label><br/>
+                    <div class="form-group">
+                        <textarea class="form-control" name="post" rows="5"></textarea>
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-primary" value="Submit" style="margin-top: 5px"/>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </form>
-    </div>
+            </form>
+        </div>
 
-    <div class="container emp-profile">
-        <h5>Your Feed</h5>
-    </div>
-    @if($posts->count() > 0)
-        @foreach($posts as $post)
-            <div class="container emp-profile">
-                <p>{!! $post->post_body !!}</p>
-                <p id="post-author">Author: {{ $post->author_full_name }}</p>
-            </div>
-        @endforeach
-    @endif
+        <div class="container emp-profile">
+            <h5>Your Feed</h5>
+        </div>
+
+        @if($posts->count() > 0)
+            @foreach($posts as $post)
+                <div class="container emp-profile">
+                    <p>{!! $post->post_body !!}</p>
+                    <p id="post-author">Author: {{ $post->author_full_name }}</p>
+                </div>
+            @endforeach
+        @endif
 
 @endsection

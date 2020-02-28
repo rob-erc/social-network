@@ -35,28 +35,33 @@
                 <div class="profile-button">
                     @if(auth()->user()->ifFollowing($user->id))
                         <form method="POST" action="{{ route('userFollow', ['userId' => $user->id]) }}">
-                            <input type="submit" class="profile-edit-btn" id="cancel-btn" value="Unfollow"/>
+                            <input type="submit" class="btn btn-secondary" id="cancel-btn" value="Unfollow"/>
                         </form>
                     @else
                         <form method="POST" action="{{ route('userFollow', ['userId' => $user->id]) }}">
-                            <input type="submit" class="profile-edit-btn" value="Follow"/>
+                            <input type="submit" class="btn btn-primary" value="Follow"/>
                         </form>
                     @endif
                 </div>
                 <div class="profile-button">
                     @if(auth()->user()->friendStatus($user->id) == 'confirmed')
                         <form method="POST" action="{{ route('userFriendRequest', ['userId' => $user->id]) }}">
-                            <input type="submit" class="profile-edit-btn" id="cancel-btn" value="Unfriend"/>
+                            <input type="submit" class="btn btn-secondary" id="cancel-btn" value="Unfriend"/>
                         </form>
                     @elseif(auth()->user()->friendStatus($user->id) == 'pending')
                         <form method="POST" action="{{ route('userFriendRequest', ['userId' => $user->id]) }}">
-                            <input type="submit" class="profile-edit-btn" value="Cancel Friend Request"/>
+                            <input type="submit" class="btn btn-secondary" value="Cancel Friend Request"/>
                         </form>
                     @else
                         <form method="POST" action="{{ route('userFriendRequest', ['userId' => $user->id]) }}">
-                            <input type="submit" class="profile-edit-btn" value="Send Friend Request"/>
+                            <input type="submit" class="btn btn-primary" value="Send Friend Request"/>
                         </form>
                     @endif
+                </div>
+                <div class="profile-button">
+                    <form method="GET" action="{{ route('userGalleries', ['slug' => $user->profileRouteSlug()]) }}">
+                        <input type="submit" class="btn btn-primary" value="Galleries"/>
+                    </form>
                 </div>
             </div>
         </div>

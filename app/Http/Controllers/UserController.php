@@ -50,10 +50,21 @@ class UserController extends Controller
         $friendship->status = 'confirmed';
         $friendship->save();
 
-        if ($auth->ifFollowing($userId)) {
-            return back();
-        } else {
+
+        if (User::find($userId)->ifFollowing($auth->id) && $auth->ifFollowing($userId) == false)  {
             $this->follow($userId);
+            return back();
+        }
+        elseif ($auth->ifFollowing($userId) && User::find($userId)->ifFollowing($auth->id) == false) {
+            User::find($userId)->following()->attach($auth->id);
+            return back();
+        }
+        elseif ($auth->ifFollowing($userId) == false && User::find($userId)->ifFollowing($auth->id) == false) {
+            $this->follow($userId);
+            User::find($userId)->following()->attach($auth->id);
+            return back();
+        }
+        else {
             return back();
         }
     }
@@ -73,6 +84,7 @@ class UserController extends Controller
 
     public function user(string $userId)
     {
+        //dd($userId);
         $user = User::find($userId);
         $allIDs = $user->following->pluck('id')->push($user->id);
 
@@ -89,7 +101,6 @@ class UserController extends Controller
         return view('user.user', [
             'user' => $user,
             'posts' => $allPosts,
-            //'ifFollowing' => $this->ifFollowing($userId)
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,26 +28,24 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request)
     {
-        DB::table('users')
-            ->where('id', Auth::id())
-            ->update([
-                'name' => $request->input('name'),
-                'surname' => $request->input('surname'),
-                'phone' => $request->input('phone'),
-                'address' => $request->input('address'),
-                'birthday' => $request->input('birthday'),
-                'bio' => $request->input('bio'),
-                'updated_at' => Carbon::now()]);
+        $user = User::where(['id' => Auth::id()])->first();
+        $user->name = $request->input('name');
+        $user->surname = $request->input('surname');
+        $user->phone = $request->input('phone');
+        $user->address = $request->input('address');
+        $user->birthday = $request->input('birthday');
+        $user->bio = $request->input('bio');
+        $user->updated_at = Carbon::now();
+        $user->save();
 
         if ($request->file() !== []){
             $path = $request->file('profileImg')->store('avatars', ['disk' => 'public']);
 
-            DB::table('users')
-                ->where('id', Auth::id())
-                ->update([
-                    'profile_picture' => $path,
-                    'updated_at' => Carbon::now()
-                ]);
+            $user = User::where(['id' => Auth::id()])->first();
+            $user->profile_picture = $path;
+            $user->updated_at = Carbon::now();
+            $user->save();
+
         }
 
         return redirect(route('profileShow', ['slug' => Auth::user()->profileRouteSlug()]));
